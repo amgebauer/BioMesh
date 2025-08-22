@@ -4,6 +4,7 @@ from . import mesh
 import lnmmeshio
 import tempfile
 import meshio
+from .reorder import reorder
 
 
 def combine_colored_stl_files(*stl_files: pathlib.Path) -> meshio.Mesh:
