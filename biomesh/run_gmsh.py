@@ -1,6 +1,7 @@
 import gmsh
 import pathlib
-import pygmsh
+import meshio
+import tempfile
 
 
 class GmshApi:
@@ -41,4 +42,8 @@ def remesh_file(
         # generate 3D mesh
         gmsh.model.mesh.generate(3)
 
-        return pygmsh.helpers.extract_to_meshio()
+        with tempfile.TemporaryDirectory() as dir:
+            file_path = pathlib.Path(dir) / "temp.msh"
+            gmsh.write(str(file_path))
+
+            return meshio.read(str(file_path))
